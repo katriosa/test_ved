@@ -1,0 +1,70 @@
+$colors: (
+        'gray': (
+                'base': #eee,
+                'dark': #9aa5aa,
+                'light': #f6f8fa,
+                'middle': #d8d8d8,
+        ),
+        'green': (
+                'base': #4f99af,
+                'dark': #77adbe,
+                'light': #f3f7f7,
+                'middle': #c4dfe2,
+        ),
+        'red': (
+                'base': #ff7a7a,
+                'dark': #db4646,
+                'darkest': #820410,
+                'middle': #ff5757,
+        ),
+        'purple': (
+                'base': #8a8dd8,
+                'muted': #e9edf9,
+        ),
+        'salmon': (
+                'base': #fdf6f2,
+                'dark': #f6c5aa,
+                'darken': #d7c0be,
+                'light': #fdf8f5,
+                'background': #fdf6f2,
+        ),
+        'brown': (
+                'base': #b39191,
+                'light': #d6c0be,
+        ),
+        'yellow': (
+                'base': #ffdb65,
+                'dark': #ffaf00,
+        ),
+        'ampersand': (
+                'base': #f38d0d,
+                'dark': #ffb558,
+                'light': #fcdcb4,
+                'muted': #fff7e8,
+        ),
+        'city': (
+                'base': #820410,
+                'dark': #70000B,
+                'light': #8F1E28,
+        ),
+        'analytics' : (
+                'base' : #6453A6,
+                'dark' : #554598,
+                'light' : #8E80C8,
+        ),
+        'think' : (
+                'base' : #AB6E75,
+                'dark' : #89585E,
+                'light' : #C3979B,
+        ),
+        'priority':(
+                'base':#CCAC72,
+                'dark':#b39763,
+                'background':#3b3b3d,
+        )
+);
+
+@function color($key, $type: 'base') {
+  $map: map-get($colors, $key);
+  @return map-get($map, $type);
+}
