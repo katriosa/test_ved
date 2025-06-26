@@ -2,18 +2,7 @@
   <button
     class="salmon-button"
     :disabled="isDisabled"
-    :class="{
-      'salmon-button--based': isBased,
-      'salmon-button--loading': isLoading,
-      'salmon-button--secondary': isSecondary,
-      'salmon-button--red': isRed,
-      'salmon-button--red_middle': isRedMiddle,
-      'salmon-button--small': isSmall,
-      'salmon-button--stretched': isStretched,
-      'salmon-button--transperent': isTransperent,
-      'salmon-button--inactive': isInactive,
-      'salmon-button--borderless': isBorderless,
-    }"
+    :class="buttonClasses"
     @click="click"
     @touchstart="click"
   >
@@ -31,82 +20,55 @@
   </button>
 </template>
 
-<script>
-export default {
-  name: 'SalmonButton',
-  props: {
-    route: {
-      type: [Object, String],
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      default: () => {},
-    },
-    isDisabled: {
-      type: Boolean,
-      default: false,
-    },
-    isTransperent: {
-      type: Boolean,
-      default: false,
-    },
-    isLoading: {
-      type: Boolean,
-      default: false,
-    },
-    isBased: {
-      type: Boolean,
-      default: false,
-    },
-    isSecondary: {
-      type: Boolean,
-      default: false,
-    },
-    isRed: {
-      type: Boolean,
-      default: false,
-    },
-    isRedMiddle: {
-      type: Boolean,
-      default: false,
-    },
-    isSmall: {
-      type: Boolean,
-      default: false,
-    },
-    isStretched: {
-      type: Boolean,
-      default: false,
-    },
-    isInactive: {
-      type: Boolean,
-      default: false,
-    },
-    isBorderless: {
-      type: Boolean,
-      default: false,
-    },
-    isWindowLocation: {
-      type: Boolean,
-      default: false,
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+import { computed } from "vue";
+
+const props = defineProps({
+  route: {
+    type: [Object, String],
+    default: null,
+  },
+  isWindowLocation: Boolean,
+  isDisabled: Boolean,
+  isTransperent: Boolean,
+  isLoading: Boolean,
+  isBased: Boolean,
+  isSecondary: Boolean,
+  isRed: Boolean,
+  isRedMiddle: Boolean,
+  isSmall: Boolean,
+  isStretched: Boolean,
+  isInactive: Boolean,
+  isBorderless: Boolean,
+});
+const emit = defineEmits(["click"]);
+
+const router = useRouter();
+
+const click = () => {
+  if (props.route) {
+    if (props.isWindowLocation && typeof props.route === "string") {
+      window.location.pathname = props.route;
+    } else {
+      router.push(props.route);
     }
-  },
-  emits: ['click'],
-  data() {
-    return {}
-  },
-  methods: {
-    click() {
-      if (this.route) {
-        if(this.isWindowLocation){
-          window.location.pathname = this.route
-        }
-        else {
-          this.$router.push(this.route)
-        }
-      }
-      this.$emit('click')
-    },
-  },
-}
+  }
+  emit("click");
+};
+
+const buttonClasses = computed(() => ({
+  "salmon-button--based": props.isBased,
+  "salmon-button--loading": props.isLoading,
+  "salmon-button--secondary": props.isSecondary,
+  "salmon-button--red": props.isRed,
+  "salmon-button--red_middle": props.isRedMiddle,
+  "salmon-button--small": props.isSmall,
+  "salmon-button--stretched": props.isStretched,
+  "salmon-button--transperent": props.isTransperent,
+  "salmon-button--inactive": props.isInactive,
+  "salmon-button--borderless": props.isBorderless,
+}));
 </script>
 
 <style lang="scss">
@@ -152,7 +114,7 @@ export default {
   }
 
   &:not(:disabled):hover {
-    background-color: var(--ved-main-dark-color, color('green', 'dark'));
+    background-color: var(--ved-main-dark-color, color("green", "dark"));
   }
 
   &:not(:disabled):active {
@@ -167,7 +129,7 @@ export default {
 .salmon-button--disabled {
   border: 1px solid black;
   background-color: #fff;
-  color: color('gray', 'dark');
+  color: color("gray", "dark");
   cursor: not-allowed;
 }
 
@@ -241,12 +203,12 @@ export default {
 }
 
 .salmon-button--red_middle {
-  background-color: color('red', 'middle');
+  background-color: color("red", "middle");
   &.salmon-button--secondary {
-    border-color: color('red', 'middle');
+    border-color: color("red", "middle");
     background: transparent;
     .salmon-button__title {
-      color: color('red', 'middle');
+      color: color("red", "middle");
     }
   }
 
@@ -292,7 +254,7 @@ export default {
   }
 }
 .salmon-button--inactive {
-  background-color: var(--ved-main-color, color('green'));
+  background-color: var(--ved-main-color, color("green"));
   .salmon-button__title {
     color: white;
   }
@@ -319,11 +281,11 @@ export default {
 }
 
 .salmon-button > .salmon-button--based {
-  background-color: var(--ved-main-color, color('green'));
+  background-color: var(--ved-main-color, color("green"));
   color: white;
 
   &:hover {
-    background-color: color('green', 'normal');
+    background-color: color("green", "normal");
   }
   &:active {
     opacity: 0.7;
